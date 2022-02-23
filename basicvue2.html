@@ -1,0 +1,95 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 5px;
+        }
+        .active {
+            background: salmon;
+            border: 1px solid;
+            padding: 5px;
+        }
+        .title-course {
+            color: red;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- Belajar Vue.js - #38 Data Component -->
+        <h2 class="title-course"><u>Belajar Vue.js : <br> #38 Membuat Component <br> #39 Data Component <br> #40 Membuat Component Part 2 <br> #41 Props <br> #42 Latihan Props </u></h2>
+        <header-component nama="VueJS" gambar="image/vuejs.png"></header-component>
+        <header-component nama="ReactJS" gambar="image/reactjs.jpg"></header-component>
+
+        <main>
+            <kelas v-bind:items="kelas" :input="kelasbaru" />
+        </main>
+
+        <footer-component></footer-component>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+    Vue.component('header-component', {
+        props: ['nama', 'gambar'],
+        template:
+                `<header>
+                    <img :src="gambar" width="300px">
+                    <p v-text="pesan"></p>
+                    <p>{{ 'Hello, ' + nama }}</p>
+                </header>`,
+        data: function() {
+            return {
+                pesan: 'The progresive Javascript framework'
+            }
+        }
+    });
+
+    Vue.component('footer-component', {
+        template:
+                `<footer>
+                    <p>copyright 2019</p>
+                </footer>`
+    });
+
+    Vue.component('kelas', {
+        props: ['items', 'input'],
+        template:
+                `<div>
+                    <h3>Tambah Submit</h3>
+                    <p><input type="text" placeholder="nama kelas" v-on:keyup.enter="submit" v-model="input"></p><hr>
+                    <h1>Daftar kelas ({{ items.length }})</h1>
+                    <template v-if="items.length > 0">
+                        <ul>
+                            <li v-for="(item, index) of items">{{ index + 1 }} - {{ item }}</li>
+                        </ul>
+                    </template>
+                </div>`,
+        data: function() {
+            return {
+
+            }
+        },
+        methods: {
+            submit: function() {
+                this.kelas.unshift(this.kelasbaru)
+                this.kelasbaru = ""
+            }
+        },
+    });
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            kelas: ['Golang', 'PHP'],
+            kelasbaru: "",
+        },
+        computed: {
+        }
+    });
+</script>
+</body>
+</html>
