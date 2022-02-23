@@ -1,0 +1,173 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 5px;
+        }
+        .active {
+            background: salmon;
+            border: 1px solid;
+            padding: 5px;
+        }
+        .title-course {
+            color: red;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1 v-once>{{ name.toUpperCase() }}</h1>
+            <h1>{{ isactive ? 'success' : 'danger' }}</h1>
+            <h1>{{ getname() }}</h1>
+            <h3>{{ message }}</h3>
+            <h1 v-text="bilangan"></h1>
+            <p>Bilangan ini adalah bilangan {{ infobilangan }}</p>
+            <p>
+                <!-- Belajar Vue.js - #18 EVENTS -->
+                <!-- <button v-on:click="handleClick">Ditekan</button> -->
+                <button @click="handleClick">Ditekan</button>
+                <!-- <button v-on:click="bilangan++">Ditekan</button> -->
+            </p>
+            <h1 v-html="link"></h1>
+            <h1 v-text="bilangan + 2"></h1>
+            <h1 v-text="name.toUpperCase()"></h1>
+            <img v-bind:src="gambar" style="width: 50%;">
+
+            <h1 v-text="bilangan"></h1>
+            <h3>{{ bilangan }} Bilangan {{ infobilangan }}</h3>
+            <p>
+                <button v-on:click="bilangan++">Tekan</button>
+                <button v-on:click="bilangan--">Tekan</button>
+            </p>
+
+            <!-- Fungsi ini dari property computer -->
+            <h3>{{ totalbayar }}</h3>
+            <h3>{{ namalengkap }}</h3>
+            <h3>{{ hitung }}</h3>
+            <p>The Progresive Javascript Framework</p>
+
+            <!-- Belajar Vue.js - #21 CLASS BINDING -->
+            <h2 class="title-course"><u>Belajar Vue.js - #21 CLASS BINDING</u></h2>
+            <button v-bind:class="{active: menu === 'home' }" @click="menu = 'home' ">Home</button>
+            <button v-bind:class="{active: menu === 'about' }" @click="menu = 'about' ">About</button>
+            <button v-bind:class="{active: menu === 'blog' }" @click="menu = 'blog' ">Blog</button>
+
+            <!-- Belajar Vue.js - #22 Two Way Data Binding -->
+            <h2 class="title-course"><u>Belajar Vue.js - #22 Two Way Data Binding</u></h2>
+            <h1 v-text="name"></h1>
+            <p><input type="text" v-model="name"></p>
+            <p>{{ kelas }}</p>
+            <div>
+                <label><input type="checkbox" value="React" v-model="kelas">React</label>
+                <label><input type="checkbox" value="VueJs" v-model="kelas">VueJs</label>
+                <label><input type="checkbox" value="Angular" v-model="kelas">Angular</label>
+            </div>
+
+            <!-- Belajar Vue.js - #23 Directive Perulangan v-for -->
+            <h2 class="title-course"><u>Belajar Vue.js - #23 Directive Perulangan v-for</u></h2>
+            <ul>
+                <!-- <li v-for="item in kelas">{{ item }}</li> -->
+                <li v-for="item of kelas" v-text="item"></li>
+            </ul>
+
+            <!-- Belajar Vue.js - #24 Mengakses Index -->
+            <h2 class="title-course"><u>Belajar Vue.js - #24 Mengakses Index</u></h2>
+            <ul>
+                <li v-for="(item, index) of kelas">{{ index+1 }} - {{ item }}</li>
+            </ul>
+
+            <h3>Perulangan 1 - 10</h3>
+            <ul>
+                <li v-for="x in 10">{{ x }}</li>
+            </ul>
+
+            <!-- Belajar Vue.js - #25 Latihan Directive vfor -->
+            <h2 class="title-course"><u>Belajar Vue.js - #25 Latihan Directive vfor</u></h2>
+            <h3>Mencari bilangan genap: {{ numbers }}</h3>
+            <ul>
+                <li v-for="x in cariBilanganGenap(numbers)">{{ x }}</li>
+            </ul>
+
+            <!-- Belajar Vue.js - #26 Conditional Rendering -->
+            <h2 class="title-course"><u>Belajar Vue.js - #26 Conditional Rendering</u></h2>
+            <ul v-if="kelas.length > 0">
+                <li v-for="(item, index) of kelas">{{ index+1 }} - {{ item }}</li>
+            </ul>
+            <li v-else>Kelas belum tersedia</li>
+
+            <!-- Belajar Vue.js - #28 Directive vshow -->
+            <h2 class="title-course"><u>Belajar Vue.js - #28 Directive vshow</u></h2>
+            <ul v-show="kelas.length > 0">
+                <li v-for="(item, index) of kelas">{{ index+1 }} - {{ item }}</li>
+            </ul>
+        </header>
+
+        <footer>
+            copyright 2019
+        </footer>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            name: 'Dede Syarifudin',
+            message: 'Hello World',
+            isactive: false,
+            qty: 4,
+            namadepan: 'Dede',
+            namabelakang: 'Syarifudin',
+            bilangan: 1,
+            link: '<a href="">Kelas.balademy</a>',
+            gambar: 'image/vuejs.png',
+            menu: 'home',
+            kelas: [],
+            numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        },
+        methods: {
+            getname: function() {
+                return 'Hello, ' +this.name
+            },
+            ubahnama: function(namabaru) {
+                this.name = namabaru
+                return this.getname();
+            },
+            handleClick: function() {
+                this.bilangan++
+                this.gambar = 'image/reactjs.jpg'
+            },
+            cariBilanganGenap: (data) => {
+                return data.filter(angka => {
+                    return angka % 2 === 0
+                })
+            }
+        },
+        computed: {
+            totalbayar: function() {
+                return this.qty * 1000
+            },
+            namalengkap: function() {
+                return this.namadepan + this.namabelakang
+            },
+            infobilangan: function() {
+                return this.bilangan % 2 === 0 ? 'Genap' : 'Ganjil' 
+            },
+            hitung: function() {
+                if (this.qty <= 3) {
+                    return 'jumlah kurang/sama dengan 3'
+                } else {
+                    return 'jumlah lebih dari 3'
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>
+
+Channel Balademy, lanjut video 18
